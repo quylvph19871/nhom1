@@ -1,3 +1,4 @@
+
 package com.example.nhom1.Fragment;
 
 import android.os.Bundle;
@@ -49,4 +50,5 @@ public class HomeFragment extends Fragment {
         viewFlipper.setInAnimation(slide_in);
         viewFlipper.setOutAnimation(slide_out);
     }
+
 }

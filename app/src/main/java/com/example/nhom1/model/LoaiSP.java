@@ -1,3 +1,4 @@
+
 package com.example.nhom1.model;
 
 public class LoaiSP {
@@ -24,4 +25,5 @@ public class LoaiSP {
     public void setTenLoai(String tenLoai) {
         this.tenLoai = tenLoai;
     }
+
 }
