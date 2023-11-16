@@ -42,7 +42,6 @@
                     android:layout_height="40dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="5dp"
-                    android:background="@drawable/search"
                     android:drawableStart="@mipmap/loupe"
                     android:drawablePadding="10dp"
                     android:hint="Tìm kiếm"

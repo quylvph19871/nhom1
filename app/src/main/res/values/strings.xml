@@ -1,3 +1,6 @@
 <resources>
-    <string name="app_name">nhom1</string>
+    <string name="app_name">App bán quần áo nam</string>
+    <string name="menu_home">Trang chủ</string>
+    <string name="menu_cart">Đơn hàng</string>
+    <string name="menu_profile">Khác</string>
 </resources>
