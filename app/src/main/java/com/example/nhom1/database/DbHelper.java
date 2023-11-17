@@ -7,15 +7,18 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 public class DbHelper extends SQLiteOpenHelper {
-    public DbHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    public static final String DB_NAME="duan1";
+    public static final int DB_VERSION=1;
+    public DbHelper(@Nullable Context context) {
+        super(context, DB_NAME, null, DB_VERSION);
     }
+
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createTableLoaiSanPham = "CREATE TABLE LOAISANPHAM(id_loaisp Integer PRIMARY KEY AUTOINCREMENT, ten_loaisp Text);";
         db.execSQL(createTableLoaiSanPham);
-        db.execSQL("INSERT INTO THELOAI VALUES(1, 'ao ret'), (2, 'ao'), (3, 'quan');");
+        db.execSQL("INSERT INTO LOAISANPHAM VALUES(1, 'ao ret'), (2, 'ao'), (3, 'quan');");
 
         String createTableUser = "CREATE TABLE USER(id_user Integer PRIMARY KEY AUTOINCREMENT, ten_user Text, password text, sdt Text, diachi Text);";
         db.execSQL(createTableUser);

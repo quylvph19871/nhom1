@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.example.nhom1.Fragment.DonHangFragment;
+import com.example.nhom1.Fragment.Fragment_sanPham;
 import com.example.nhom1.Fragment.GioHangFragment;
 import com.example.nhom1.Fragment.HomeFragment;
 import com.example.nhom1.Fragment.TaiKhoanFragment;
@@ -32,8 +33,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Fragment fragment;
-        if (item.getItemId() == R.id.Trangchu) {
-            fragment = new HomeFragment();
+        if (item.getItemId() == R.id.Trangchu ) {
+            fragment = new Fragment_sanPham();
             load(fragment);
             return true;
         } else if (item.getItemId() == R.id.gioHang) {
