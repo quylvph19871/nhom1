@@ -19,8 +19,8 @@ public class WellcomeActivity extends AppCompatActivity {
         imgAppName = findViewById(R.id.imgappname);
         lottieAnimationView = findViewById(R.id.lottieAnimationView);
 
-        imgAppName.animate().translationY(-800).setDuration(2700).setStartDelay(0);
-        lottieAnimationView.animate().translationY(700).setDuration(2000).setStartDelay(0);
+        imgAppName.animate().translationY(-700).setDuration(2700).setStartDelay(0);
+        lottieAnimationView.animate().translationY(600).setDuration(2000).setStartDelay(0);
 
         Intent intent = new Intent(WellcomeActivity.this, LoginActivity.class);
         Thread time = new Thread(){

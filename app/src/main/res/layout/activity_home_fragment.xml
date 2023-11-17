@@ -44,6 +44,7 @@
                     android:layout_marginRight="5dp"
                     android:drawableStart="@mipmap/loupe"
                     android:drawablePadding="10dp"
+                    android:background="@drawable/text_input"
                     android:hint="Tìm kiếm"
                     android:padding="2dp"
                     android:paddingStart="15dp"
@@ -117,7 +118,7 @@
 
                 <TextView
                     android:textStyle="bold"
-                    android:textColor="#444444"
+                    android:textColor="@color/text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Sản phẩm bán chạy"
