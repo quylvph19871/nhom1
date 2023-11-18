@@ -1,26 +1,29 @@
 package com.example.nhom1.Adapter;
 
 import android.app.Activity;
-import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextClock;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.nhom1.Activity.Admin.ChiTietSanPham;
+import com.example.nhom1.Activity.Admin.SuaSanPham;
 import com.example.nhom1.DAO.SanPhamDAO;
 import com.example.nhom1.R;
 import com.example.nhom1.model.SanPham;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.SanPhamViewHolder>{
@@ -33,7 +36,6 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.SanPhamV
         this.context = context;
         this.list = list;
     }
-
     @NonNull
     @Override
     public SanPhamViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -51,43 +53,55 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.SanPhamV
         holder.item_tenSP.setText(sanPham.getTen_sp());
         holder.item_motaSP.setText(sanPham.getMota_sp());
         holder.item_giaSP.setText(sanPham.getGiatien_sp()+"");
-        holder.ln.setOnClickListener(new View.OnClickListener() {
+        view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(context, ChiTietSanPham.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("id_sp",sanPham.getId_sp());
+                intent.putExtras(bundle);
+                context.startActivity(intent);
             }
         });
-        // Handle click events for edit and delete
         holder.item_suaSP.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                // Handle edit click
+            public void onClick(View view) {
+                Intent intent = new Intent(context, SuaSanPham.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("id_sp",sanPham.getId_sp());
+                intent.putExtras(bundle);
+                context.startActivity(intent);
             }
         });
-
         holder.item_xoaSP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Handle delete click
-                AlertDialog.Builder builder=new AlertDialog.Builder(context);
-                builder.setTitle("CÓ đồng ý xóa không"+sanPham.getId_sp());
-                builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+                Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.dialog_xoa);
+                TextView tieuDe = dialog.findViewById(R.id.tv_xoa);
+                TextView noiDungXoa = dialog.findViewById(R.id.tv_nd_xoa);
+                Button btn_xoa = dialog.findViewById(R.id.btn_dialog_xoa);
+                Button btn_huy = dialog.findViewById(R.id.btn_dialog_huy);
+                tieuDe.setText("Xóa sản phẩm");
+                noiDungXoa.setText("Bạn chắc chắn muốn xóa sản phẩm "+sanPham.getTen_sp()+" này?");
+                btn_huy.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                btn_xoa.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
                         SanPhamDAO dao=new SanPhamDAO(context);
                         dao.deleteSanPham(sanPham);
                         list.remove(sanPham);
                         notifyDataSetChanged();
-                        dialogInterface.dismiss();
+                        dialog.dismiss();
+                        Toast.makeText(context, "Xóa thành công!", Toast.LENGTH_SHORT).show();
                     }
                 });
-                builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
-                builder.create().show();
+                dialog.show();
             }
         });
     }
@@ -100,16 +114,15 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.SanPhamV
     class SanPhamViewHolder extends RecyclerView.ViewHolder{
         ImageView item_imgSP,item_xoaSP,item_suaSP;
         TextView item_tenSP,item_motaSP,item_giaSP;
-        LinearLayout ln;
+        RelativeLayout rlt;
         public SanPhamViewHolder(@NonNull View itemView) {
             super(itemView);
             item_imgSP=itemView.findViewById(R.id.img_item_imgSp);
             item_tenSP=itemView.findViewById(R.id.tv_item_tenSP);
             item_motaSP=itemView.findViewById(R.id.tv_item_ThanhphanSP);
             item_giaSP=itemView.findViewById(R.id.tv_item_tiendm);
-            item_suaSP=item_imgSP.findViewById(R.id.img_suaSP);
+            item_suaSP=itemView.findViewById(R.id.img_suaSP);
             item_xoaSP=itemView.findViewById(R.id.img_xoaSP);
-            ln=itemView.findViewById(R.id.linear_dsSP);
         }
     }
 }

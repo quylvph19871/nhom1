@@ -4,7 +4,10 @@
         android:title="Trang chủ"
         android:id="@+id/Trangchu"
         android:icon="@mipmap/home"/>
-
+    <item
+        android:title="Sản phẩm"
+        android:id="@+id/sanPham"
+        android:icon="@mipmap/note"/>
     <item
         android:title="Giỏ hàng"
         android:id="@+id/gioHang"

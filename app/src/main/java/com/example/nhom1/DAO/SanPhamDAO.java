@@ -22,17 +22,17 @@ public class SanPhamDAO {
         database=dbHelper.getWritableDatabase();
     }
 
-    public long insertSanPham(SanPham sanPham) {
+    public boolean insertSanPham(SanPham sanPham) {
+        ContentValues values = new ContentValues();
+        values.put("id_loaisp", sanPham.getId_loaisp());
+        values.put("anh_sp", sanPham.getAnh_sp());
+        values.put("ten_sp", sanPham.getTen_sp());
+        values.put("mota_sp", sanPham.getMota_sp());
+        values.put("giatien_sp", sanPham.getGiatien_sp()+"");
 
-            ContentValues values = new ContentValues();
-            values.put("id_loaisp", sanPham.getId_loaisp());
-            values.put("anh_sp", sanPham.getAnh_sp());
-            values.put("ten_sp", sanPham.getTen_sp());
-            values.put("mota_sp", sanPham.getMota_sp());
-            values.put("giatien_sp", sanPham.getGiatien_sp()+"");
+        long result = database.insert("SANPHAM", null, values);
 
-            return database.insert("SanPham", null, values);
-
+        return result != -1; // Nếu result khác -1 tức là insert thành công, trả về true, ngược lại trả về false
     }
 
     @SuppressLint("Range")
@@ -40,7 +40,7 @@ public class SanPhamDAO {
         List<SanPham> sanPhamList = new ArrayList<>();
         try {
             database = dbHelper.getReadableDatabase();
-            String query = "SELECT * FROM SanPham";
+            String query = "SELECT * FROM SANPHAM";
             Cursor cursor = database.rawQuery(query, null);
 
             while (cursor.moveToNext()) {
@@ -98,4 +98,64 @@ public class SanPhamDAO {
 
         return database.delete("SanPham","id_sp=?", tham_so);
     }
+    @SuppressLint("Range")
+    public SanPham getOneSanPham(int id) {
+        SanPham sanPham = new SanPham();
+        try {
+            database = dbHelper.getReadableDatabase();
+            String query = "SELECT * FROM SANPHAM WHERE id_sp = ?";
+            Cursor cursor = database.rawQuery(query, new String[]{String.valueOf(id)});
+
+            if (cursor.moveToFirst()) {
+                sanPham.setId_sp(cursor.getInt(cursor.getColumnIndex("id_sp")));
+                sanPham.setId_loaisp(cursor.getInt(cursor.getColumnIndex("id_loaisp")));
+                sanPham.setAnh_sp(cursor.getBlob(cursor.getColumnIndex("anh_sp")));
+                sanPham.setTen_sp(cursor.getString(cursor.getColumnIndex("ten_sp")));
+                sanPham.setMota_sp(cursor.getString(cursor.getColumnIndex("mota_sp")));
+                sanPham.setGiatien_sp(cursor.getDouble(cursor.getColumnIndex("giatien_sp")));
+            }
+
+            cursor.close();
+        } catch (Exception ex) {
+            Log.e("READ_ERROR", ex.getMessage());
+        } finally {
+            if (database != null && database.isOpen()) {
+                database.close();
+            }
+        }
+
+        return sanPham;
+    }
+    @SuppressLint("Range")
+    public List<SanPham> getSanPhamTheoIDLoai(int id_loaisp) {
+        List<SanPham> sanPhamList = new ArrayList<>();
+        try {
+            database = dbHelper.getReadableDatabase();
+            String query = "SELECT * FROM SANPHAM WHERE id_loaisp = ?";
+            Cursor cursor = database.rawQuery(query, new String[]{String.valueOf(id_loaisp)});
+
+            while (cursor.moveToNext()) {
+                SanPham sanPham = new SanPham();
+                sanPham.setId_sp(cursor.getInt(cursor.getColumnIndex("id_sp")));
+                sanPham.setId_loaisp(cursor.getInt(cursor.getColumnIndex("id_loaisp")));
+                sanPham.setAnh_sp(cursor.getBlob(cursor.getColumnIndex("anh_sp")));
+                sanPham.setTen_sp(cursor.getString(cursor.getColumnIndex("ten_sp")));
+                sanPham.setMota_sp(cursor.getString(cursor.getColumnIndex("mota_sp")));
+                sanPham.setGiatien_sp(cursor.getDouble(cursor.getColumnIndex("giatien_sp")));
+
+                sanPhamList.add(sanPham);
+            }
+
+            cursor.close();
+        } catch (Exception ex) {
+            Log.e("READ_ERROR", ex.getMessage());
+        } finally {
+            if (database != null && database.isOpen()) {
+                database.close();
+            }
+        }
+
+        return sanPhamList;
+    }
+
 }

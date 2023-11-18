@@ -1,25 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="400dp"
-    android:layout_height="670dp"
-    android:padding="10dp"
-    android:layout_gravity="center"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tv_dal_sp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Thêm sản phẩm"
-                android:textSize="24sp"
-                android:textColor="@color/black"
-                android:gravity="center"/>
-      <LinearLayout
+       <RelativeLayout
+           android:paddingHorizontal="20dp"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:paddingVertical="10dp">
+           <ImageView
+               android:id="@+id/btn_exit"
+               android:layout_width="40dp"
+               android:layout_height="40dp"
+               android:layout_alignParentLeft="true"
+               android:layout_centerVertical="true"
+               android:src="@drawable/baseline_arrow_back_24"/>
+           <TextView
+               android:layout_centerInParent="true"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Sửa sản phẩm"
+               android:textSize="24sp"
+               android:textColor="@color/black" />
+       </RelativeLayout>
+        <LinearLayout
             android:orientation="vertical"
             android:padding="16dp"
             android:gravity="center_horizontal"
@@ -43,7 +49,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Tên san pham"
                     android:textSize="18dp"
-                     />
+                    />
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/edL_Mota"
@@ -59,7 +65,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Mô tả"
                     android:textSize="18dp"
-                     />
+                    />
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/edL_giaSP"
@@ -92,17 +98,16 @@
                 android:layout_marginTop="15dp"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
-                android:layout_marginBottom="20dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/add_sanpham"
                 />
-           <Button
-               android:id="@+id/btn_themSpham"
-               android:layout_width="300dp"
-               android:layout_height="wrap_content"
-               android:text="Thêm sản phẩm"
-               android:backgroundTint="#00BCD4"
-               />
+            <Button
+                android:layout_marginTop="50dp"
+                android:id="@+id/btn_themSpham"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:text="Sửa sản phẩm"
+                android:backgroundTint="#00BCD4"
+                />
         </LinearLayout>
-    </LinearLayout>
-</ScrollView>
+</LinearLayout>

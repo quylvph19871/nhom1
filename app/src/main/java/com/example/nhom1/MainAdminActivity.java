@@ -1,56 +1,50 @@
 package com.example.nhom1;
 
+import android.os.Bundle;
+import android.view.MenuItem;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.os.Bundle;
-import android.view.MenuItem;
-
-import com.example.nhom1.Fragment.DonHangFragment;
-import com.example.nhom1.Fragment.Fragment_sanPham;
-import com.example.nhom1.Fragment.GioHangFragment;
-import com.example.nhom1.Fragment.HomeFragment;
+import com.example.nhom1.Fragment.Admin.Fragment_quanLyDonHang;
+import com.example.nhom1.Fragment.Admin.Fragment_quanLySanPham;
+import com.example.nhom1.Fragment.Admin.Fragment_thongKe;
 import com.example.nhom1.Fragment.TaiKhoanFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class MainAdminActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     public static BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_admin);
         bottomNavigationView = findViewById(R.id.bottomnavigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
-        bottomNavigationView.setSelectedItemId(R.id.Trangchu);
-        load(new HomeFragment());
+        bottomNavigationView.setSelectedItemId(R.id.quanLySP);
+        load(new Fragment_quanLySanPham());
 
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Fragment fragment;
-        if (item.getItemId() == R.id.Trangchu ) {
-            fragment = new Fragment_sanPham();
+        if (item.getItemId() == R.id.quanLySP ) {
+            fragment = new Fragment_quanLySanPham();
             load(fragment);
             return true;
-        }
-        else if (item.getItemId() == R.id.sanPham) {
-            fragment = new Fragment_sanPham();
+        } else if (item.getItemId() == R.id.quanLyDH) {
+            fragment = new Fragment_quanLyDonHang();
             load(fragment);
             return true;
-        }else if (item.getItemId() == R.id.gioHang) {
-            fragment = new GioHangFragment();
+        } else if (item.getItemId() == R.id.thongKe) {
+            fragment = new Fragment_thongKe();
             load(fragment);
             return true;
-        } else if (item.getItemId() == R.id.donhang) {
-            fragment = new DonHangFragment();
-            load(fragment);
-            return true;
-        } else if (item.getItemId() == R.id.taikhoan) {
+        } else if (item.getItemId() == R.id.taikhoanAd) {
             fragment = new TaiKhoanFragment();
             load(fragment);
             return true;
@@ -61,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     public void load(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, fragment);
+        fragmentTransaction.replace(R.id.fragment_containerAD, fragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }

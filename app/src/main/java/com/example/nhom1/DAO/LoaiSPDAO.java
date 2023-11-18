@@ -14,21 +14,47 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoaiSPDAO {
-     SQLiteDatabase db;
-     DbHelper dbHelper;
+    SQLiteDatabase db;
+    DbHelper dbHelper;
 
     public LoaiSPDAO(Context context) {
         dbHelper = new DbHelper(context);
         db = dbHelper.getWritableDatabase();
     }
 
-    public long insertLoaiSP(LoaiSP loaiSP) {
+    @SuppressLint("Range")
+    public LoaiSP getOneLoaiSP(int id) {
+        LoaiSP loaiSP = null;
+        try {
+            db = dbHelper.getReadableDatabase();
+            String query = "SELECT * FROM LOAISANPHAM WHERE id_loaisp = ?";
+            Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(id)});
+
+            if (cursor.moveToFirst()) {
+                loaiSP = new LoaiSP();
+                loaiSP.setId_loaisp(cursor.getInt(cursor.getColumnIndex("id_loaisp")));
+                loaiSP.setTen_loaisp(cursor.getString(cursor.getColumnIndex("ten_loaisp")));
+            }
+
+            cursor.close();
+        } catch (Exception ex) {
+            Log.e("READ_ONE_ERROR", ex.getMessage());
+        } finally {
+            if (db != null && db.isOpen()) {
+                db.close();
+            }
+        }
+
+        return loaiSP;
+    }
+
+    public boolean insertLoaiSP(LoaiSP loaiSP) {
 
 
-            ContentValues values = new ContentValues();
-            values.put("ten_loaisp", loaiSP.getTen_loaisp());
-
-            return  db.insert("LoaiSP", null, values);
+        ContentValues values = new ContentValues();
+        values.put("ten_loaisp", loaiSP.getTen_loaisp());
+        long result = db.insert("LOAISANPHAM", null, values);
+        return result != -1;
     }
 
     @SuppressLint("Range")
@@ -36,7 +62,7 @@ public class LoaiSPDAO {
         List<LoaiSP> loaiSPList = new ArrayList<>();
         try {
             db = dbHelper.getReadableDatabase();
-            String query = "SELECT * FROM LoaiSP";
+            String query = "SELECT * FROM LOAISANPHAM";
             Cursor cursor = db.rawQuery(query, null);
 
             while (cursor.moveToNext()) {
@@ -65,14 +91,14 @@ public class LoaiSPDAO {
             ContentValues values = new ContentValues();
             values.put("ten_loaisp", loaiSP.getTen_loaisp());
 
-            int rowsAffected = db.update("LoaiSP", values, "id_loaisp = ?", new String[]{String.valueOf(loaiSP.getId_loaisp())}
+            int rowsAffected = db.update("LOAISANPHAM", values, "id_loaisp = ?", new String[]{String.valueOf(loaiSP.getId_loaisp())}
             );
 
             return rowsAffected > 0;
         } catch (Exception ex) {
             Log.e("UPDATE_ERROR", ex.getMessage());
             return false;
-        }  finally {
+        } finally {
             if (db != null && db.isOpen()) {
                 db.close();
             }
@@ -82,7 +108,11 @@ public class LoaiSPDAO {
     public boolean deleteLoaiSP(int id) {
         try {
             db = dbHelper.getWritableDatabase();
-            int rowsAffected = db.delete("LoaiSP", "id_loaisp = ?", new String[]{String.valueOf(id)});
+            // Xóa tất cả sản phẩm thuộc loại sản phẩm bị xóa
+            db.delete("SANPHAM", "id_loaisp = ?", new String[]{String.valueOf(id)});
+
+            // Sau đó xóa loại sản phẩm
+            int rowsAffected = db.delete("LOAISANPHAM", "id_loaisp = ?", new String[]{String.valueOf(id)});
             return rowsAffected > 0;
         } catch (Exception ex) {
             Log.e("DELETE_ERROR", ex.getMessage());
@@ -93,4 +123,5 @@ public class LoaiSPDAO {
             }
         }
     }
+
 }

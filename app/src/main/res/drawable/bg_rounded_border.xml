@@ -1,0 +1,17 @@
+<!-- bg_rounded_border.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <!-- Đường viền -->
+    <stroke
+        android:width="2dp"
+        android:color="@color/text" /> <!-- Màu và độ rộng của đường viền -->
+
+    <!-- Bo góc -->
+    <corners
+        android:radius="8dp" /> <!-- Bán kính của góc, bạn có thể thay đổi giá trị theo ý muốn -->
+
+    <!-- Màu nền -->
+    <solid
+        android:color="#EFECEC" /> <!-- Màu nền của layout -->
+
+</shape>

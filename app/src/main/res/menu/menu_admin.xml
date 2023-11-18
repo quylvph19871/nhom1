@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:title="Sản phẩm"
+        android:id="@+id/quanLySP"
+        android:icon="@mipmap/home"/>
+
+    <item
+        android:title="Đơn hàng"
+        android:id="@+id/quanLyDH"
+        android:icon="@mipmap/cart"/>
+
+    <item
+        android:title="Thống kê"
+        android:id="@+id/thongKe"
+        android:icon="@mipmap/note"/>
+
+    <item
+        android:title="Tài Khoản"
+        android:id="@+id/taikhoanAd"
+        android:icon="@mipmap/user"/>
+</menu>
